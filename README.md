@@ -1,4 +1,4 @@
-# xlo
+# Aplicativo XLO
 
 A new Flutter project.
 
