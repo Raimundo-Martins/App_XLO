@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get_it/get_it.dart';
 import 'package:xlo/components/custom_drawer/page_tile.dart';
-import 'package:xlo/stores/page_store.dart';
+import 'package:xlo/stores/page/page_store.dart';
 
 class PageSection extends StatelessWidget {
   final pageStore = GetIt.I<PageStore>();

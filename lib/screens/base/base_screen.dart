@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get_it/get_it.dart';
 import 'package:mobx/mobx.dart';
 import 'package:xlo/screens/home/home_screen.dart';
-import 'package:xlo/stores/page_store.dart';
+import 'package:xlo/stores/page/page_store.dart';
 
 class BaseScreen extends StatefulWidget {
   @override
