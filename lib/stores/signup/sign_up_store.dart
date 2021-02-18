@@ -1,5 +1,7 @@
 import 'package:xlo/helpers/extensions.dart';
 import 'package:mobx/mobx.dart';
+import 'package:xlo/models/user.dart';
+import 'package:xlo/repositories/user_repository.dart';
 part 'sign_up_store.g.dart';
 
 class SignUpStore = _SignUpStoreBase with _$SignUpStore;
@@ -86,5 +88,25 @@ abstract class _SignUpStoreBase with Store {
       return null;
     else
       return 'Senha diferente!';
+  }
+
+  @computed
+  bool get isFormValid =>
+      nameValid && emailValid && phoneValid && senha1Valid && senha2Valid;
+
+  @computed
+  Function get signUpPressed => (isFormValid && !loading) ? _signUp : null;
+
+  @observable
+  bool loading = false;
+
+  @action
+  Future<void> _signUp() async {
+    loading = true;
+
+    final user = User(name: name, email: email, phone: phone, senha: senha1);
+    await UserRepository().signUp(user);
+
+    loading = false;
   }
 }
