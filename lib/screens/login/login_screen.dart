@@ -1,7 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:xlo/screens/signup/sign_up_screen.dart';
+import 'package:xlo/stores/login/login_store.dart';
 
 class LoginScreen extends StatelessWidget {
+  final loginStore = LoginStore();
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -41,13 +45,17 @@ class LoginScreen extends StatelessWidget {
                         ),
                       ),
                     ),
-                    TextField(
-                      decoration: InputDecoration(
-                        border: OutlineInputBorder(),
-                        isDense: true,
-                      ),
-                      keyboardType: TextInputType.emailAddress,
-                    ),
+                    Observer(builder: (_) {
+                      return TextField(
+                        enabled: !loginStore.loading,
+                        decoration: InputDecoration(
+                            border: OutlineInputBorder(),
+                            isDense: true,
+                            errorText: loginStore.emailError),
+                        onChanged: loginStore.setEmail,
+                        keyboardType: TextInputType.emailAddress,
+                      );
+                    }),
                     SizedBox(height: 16),
                     Padding(
                       padding: EdgeInsets.only(left: 3, bottom: 4),
@@ -75,27 +83,39 @@ class LoginScreen extends StatelessWidget {
                         ],
                       ),
                     ),
-                    TextField(
-                      decoration: InputDecoration(
-                        border: OutlineInputBorder(),
-                        isDense: true,
-                      ),
-                      obscureText: true,
-                    ),
-                    Container(
-                      height: 50,
-                      margin: EdgeInsets.symmetric(vertical: 16),
-                      child: RaisedButton(
-                        color: Colors.orange,
-                        child: Text('ENTRAR'),
-                        textColor: Colors.white,
-                        elevation: 0,
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(25),
+                    Observer(builder: (_) {
+                      return TextField(
+                        enabled: !loginStore.loading,
+                        decoration: InputDecoration(
+                            border: OutlineInputBorder(),
+                            isDense: true,
+                            errorText: loginStore.senhaError),
+                        obscureText: true,
+                        onChanged: loginStore.setSenha,
+                      );
+                    }),
+                    Observer(builder: (_) {
+                      return Container(
+                        height: 50,
+                        margin: EdgeInsets.symmetric(vertical: 16),
+                        child: RaisedButton(
+                          color: Colors.orange,
+                          child: loginStore.loading
+                              ? CircularProgressIndicator(
+                                  valueColor:
+                                      AlwaysStoppedAnimation(Colors.white),
+                                )
+                              : ('ENTRAR'),
+                          textColor: Colors.white,
+                          disabledColor: Colors.orange.withAlpha(120),
+                          elevation: 0,
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(25),
+                          ),
+                          onPressed: loginStore.loginPressed,
                         ),
-                        onPressed: () {},
-                      ),
-                    ),
+                      );
+                    }),
                     Divider(color: Colors.black),
                     Padding(
                       padding: EdgeInsets.symmetric(vertical: 8),
