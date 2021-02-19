@@ -100,12 +100,19 @@ abstract class _SignUpStoreBase with Store {
   @observable
   bool loading = false;
 
+  @observable
+  String error;
+
   @action
   Future<void> _signUp() async {
     loading = true;
 
     final user = User(name: name, email: email, phone: phone, senha: senha1);
-    await UserRepository().signUp(user);
+    try {
+      final resultUser = await UserRepository().signUp(user);
+    } catch (e) {
+      error = e;
+    }
 
     loading = false;
   }
