@@ -3,6 +3,7 @@ import 'package:get_it/get_it.dart';
 //import 'package:parse_server_sdk/parse_server_sdk.dart';
 import 'package:xlo/screens/base/base_screen.dart';
 import 'package:xlo/stores/page/page_store.dart';
+import 'package:xlo/stores/user/user_manager_store.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -13,6 +14,7 @@ void main() async {
 
 void setupLocators() {
   GetIt.I.registerSingleton(PageStore());
+  GetIt.I.registerSingleton(UserManagerStore());
 }
 
 //Informações da chave do Parse Server - Back4App

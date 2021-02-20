@@ -19,6 +19,16 @@ class UserRepository {
       return Future.error(ParseErrors.getDescription(response.error.code));
   }
 
+  Future<User> loginWithEmail(String email, String senha) async {
+    final parseUser = ParseUser(email, senha, null);
+    final response = await parseUser.login();
+
+    if (response.success)
+      return mapParseToUser(response.result);
+    else
+      return Future.error(ParseErrors.getDescription(response.error.code));
+  }
+
   User mapParseToUser(ParseUser parseUser) {
     return User(
       id: parseUser.objectId,
@@ -28,5 +38,18 @@ class UserRepository {
       type: UserType.values[parseUser.get(KeyUserType)],
       createdAt: parseUser.get(KeyUserCreatedAt),
     );
+  }
+
+  Future<User> currentUser() async {
+    final parseUser = await ParseUser.currentUser();
+    if (parseUser != null) {
+      final response =
+          await ParseUser.getCurrentUserFromServer(parseUser.sessionToken);
+      if (response.success)
+        return mapParseToUser(response.result);
+      else
+        await parseUser.logout();
+    }
+    return null;
   }
 }
