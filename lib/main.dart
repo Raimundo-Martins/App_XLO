@@ -17,7 +17,7 @@ void setupLocators() {
   GetIt.I.registerSingleton(UserManagerStore());
 }
 
-//Informações da chave do Parse Server - Back4App
+//Informações da chave do projeto - Back4App
 
 class MyApp extends StatelessWidget {
   @override
