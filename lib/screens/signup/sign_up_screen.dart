@@ -42,7 +42,7 @@ class SignUpScreen extends StatelessWidget {
                       ),
                     ),
                     FieldTitle(
-                      title: 'Apelido',
+                      title: 'Apelido: ',
                       subtitle: 'Como aparecera em seus anúncios.',
                     ),
                     Observer(builder: (_) {
@@ -58,7 +58,7 @@ class SignUpScreen extends StatelessWidget {
                     }),
                     SizedBox(height: 16),
                     FieldTitle(
-                      title: 'E-mail',
+                      title: 'E-mail: ',
                       subtitle: 'Enviaremos um e-mail de confimação.',
                     ),
                     Observer(builder: (_) {
@@ -76,7 +76,7 @@ class SignUpScreen extends StatelessWidget {
                     }),
                     SizedBox(height: 16),
                     FieldTitle(
-                      title: 'Celular',
+                      title: 'Celular: ',
                       subtitle: 'Proteja sua conta.',
                     ),
                     Observer(builder: (_) {
@@ -97,7 +97,7 @@ class SignUpScreen extends StatelessWidget {
                     }),
                     SizedBox(height: 16),
                     FieldTitle(
-                      title: 'Senha',
+                      title: 'Senha: ',
                       subtitle: 'Use letras, números e caracteres especiais.',
                     ),
                     Observer(builder: (_) {
@@ -113,7 +113,7 @@ class SignUpScreen extends StatelessWidget {
                     }),
                     SizedBox(height: 16),
                     FieldTitle(
-                      title: 'Confirmar senha',
+                      title: 'Confirmar senha: ',
                       subtitle: 'Repita a senha, por favor.',
                     ),
                     Observer(builder: (_) {
@@ -158,7 +158,7 @@ class SignUpScreen extends StatelessWidget {
                         alignment: WrapAlignment.center,
                         children: [
                           Text(
-                            'Já tem uma conta?',
+                            'Já tem uma conta? ',
                             style: TextStyle(fontSize: 16),
                           ),
                           GestureDetector(

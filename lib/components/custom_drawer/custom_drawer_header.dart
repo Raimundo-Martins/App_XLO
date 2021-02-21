@@ -44,6 +44,7 @@ class CustomDrawerHeader extends StatelessWidget {
                       fontWeight: FontWeight.w500,
                     ),
                   ),
+                  SizedBox(height: 8,),
                   Text(
                     userManagerStore.isLoggedIn
                         ? userManagerStore.user.email

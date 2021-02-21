@@ -114,7 +114,7 @@ class LoginScreen extends StatelessWidget {
                                   valueColor:
                                       AlwaysStoppedAnimation(Colors.white),
                                 )
-                              : ('ENTRAR'),
+                              : Text('ENTRAR'),
                           textColor: Colors.white,
                           disabledColor: Colors.orange.withAlpha(120),
                           elevation: 0,
@@ -132,7 +132,7 @@ class LoginScreen extends StatelessWidget {
                         alignment: WrapAlignment.center,
                         children: [
                           Text(
-                            'Não tem uma conta?',
+                            'Não tem uma conta? ',
                             style: TextStyle(fontSize: 16),
                           ),
                           GestureDetector(
