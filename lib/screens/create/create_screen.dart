@@ -2,6 +2,7 @@ import 'package:brasil_fields/formatter/real_input_formatter.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:xlo/components/custom_drawer/custom_drawer.dart';
+import 'package:xlo/screens/create/components/images_field.dart';
 
 class CreateScreen extends StatelessWidget {
   @override
@@ -17,12 +18,14 @@ class CreateScreen extends StatelessWidget {
         centerTitle: true,
       ),
       body: Card(
+        clipBehavior: Clip.antiAlias,
         margin: EdgeInsets.symmetric(horizontal: 16),
         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
         elevation: 8,
         child: Column(
           mainAxisSize: MainAxisSize.min,
           children: [
+            ImagesField(),
             TextFormField(
               decoration: InputDecoration(
                 labelText: 'Título *',
