@@ -5,11 +5,11 @@ import 'package:xlo/components/error_box.dart';
 import 'package:xlo/models/category.dart';
 import 'package:xlo/stores/category/category_store.dart';
 
-class CategotyScreen extends StatelessWidget {
+class CategoryScreen extends StatelessWidget {
   final Category selected;
   final bool showAll;
 
-  CategotyScreen({this.selected, this.showAll = true});
+  CategoryScreen({this.selected, this.showAll = true});
 
   final CategoryStore categoryStore = GetIt.I<CategoryStore>();
 
@@ -37,10 +37,40 @@ class CategotyScreen extends StatelessWidget {
                 return Center(
                   child: CircularProgressIndicator(),
                 );
-              return Column(
-                crossAxisAlignment: CrossAxisAlignment.stretch,
-                children: [],
-              );
+              else {
+                final categories = showAll
+                    ? categoryStore.allCategoryList
+                    : categoryStore.categoryList;
+                return ListView.separated(
+                  itemCount: categories.length,
+                  separatorBuilder: (context, index) =>
+                      Divider(height: 0.1, color: Colors.grey),
+                  itemBuilder: (context, index) {
+                    final category = categories[index];
+                    return InkWell(
+                      onTap: () {
+                        Navigator.of(context).pop(category);
+                      },
+                      child: Container(
+                        height: 50,
+                        color: category.id == selected?.id
+                            ? Colors.purple.withAlpha(50)
+                            : null,
+                        alignment: Alignment.center,
+                        child: Text(
+                          category.description,
+                          style: TextStyle(
+                            color: Colors.grey[700],
+                            fontWeight: category.id == selected?.id
+                                ? FontWeight.bold
+                                : null,
+                          ),
+                        ),
+                      ),
+                    );
+                  },
+                );
+              }
             },
           ),
         ),
