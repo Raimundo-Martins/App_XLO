@@ -1,5 +1,3 @@
-import 'package:flutter/foundation.dart';
-
 class UF {
   UF({this.id, this.sigla, this.nome});
 
