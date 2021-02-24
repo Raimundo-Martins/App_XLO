@@ -21,11 +21,11 @@ class ImagesField extends StatelessWidget {
 
     return Container(
       color: Colors.grey[200],
-      height: 120,
+      height: 100,
       child: Observer(
         builder: (context) => ListView.builder(
           itemBuilder: (context, index) {
-            if (index == createStore.images.length + 1)
+            if (index == createStore.images.length)
               return Padding(
                 padding: const EdgeInsets.fromLTRB(8, 8, 0, 8),
                 child: GestureDetector(
@@ -42,13 +42,13 @@ class ImagesField extends StatelessWidget {
                               ImageSourceModal(onImageSelected));
                   },
                   child: CircleAvatar(
-                    radius: 50,
-                    backgroundColor: Colors.grey[300],
+                    radius: 45,
+                    backgroundColor: Colors.grey[500],
                     child: Column(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
                         Icon(Icons.camera_enhance,
-                            size: 40, color: Colors.white),
+                            size: 50, color: Colors.white),
                       ],
                     ),
                   ),
@@ -56,7 +56,7 @@ class ImagesField extends StatelessWidget {
               );
             else
               return Padding(
-                padding: EdgeInsets.fromLTRB(8, 16, index == 4 ? 8 : 0, 16),
+                padding: EdgeInsets.fromLTRB(8, 8, index == 4 ? 8 : 0, 8),
                 child: GestureDetector(
                   onTap: () {
                     showDialog(
@@ -68,7 +68,7 @@ class ImagesField extends StatelessWidget {
                     );
                   },
                   child: CircleAvatar(
-                    radius: 50,
+                    radius: 45,
                     backgroundImage: FileImage(createStore.images[index]),
                   ),
                 ),

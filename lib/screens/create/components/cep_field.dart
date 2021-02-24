@@ -62,7 +62,9 @@ class CepField extends StatelessWidget {
                 height: 50,
                 padding: EdgeInsets.all(8),
                 child: Text(
-                  'Localização: ${address.district}, ${address.city.nome} - ${address.uf.sigla}',
+                  address.district == ''
+                      ? 'Localização: ${address.city.nome} - ${address.uf.sigla}'
+                      : 'Localização: ${address.district}, ${address.city.nome} - ${address.uf.sigla}',
                   style: TextStyle(
                     fontWeight: FontWeight.w600,
                     color: Colors.white,
