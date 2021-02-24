@@ -4,6 +4,7 @@ import 'package:flutter/services.dart';
 import 'package:xlo/components/custom_drawer/custom_drawer.dart';
 import 'package:xlo/screens/create/components/category_field.dart';
 import 'package:xlo/screens/create/components/cep_field.dart';
+import 'package:xlo/screens/create/components/hide_phone_field.dart';
 import 'package:xlo/screens/create/components/images_field.dart';
 import 'package:xlo/stores/create/create_store.dart';
 
@@ -29,6 +30,7 @@ class CreateScreen extends StatelessWidget {
         elevation: 8,
         child: Column(
           mainAxisSize: MainAxisSize.min,
+          crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
             ImagesField(createStore),
             TextFormField(
@@ -60,6 +62,18 @@ class CreateScreen extends StatelessWidget {
                 RealInputFormatter(centavos: true)
               ],
             ),
+            HidePhoneField(createStore),
+            SizedBox(
+              height: 50,
+              child: RaisedButton(
+                child: Text('Enviar', style: TextStyle(fontSize: 18)),
+                textColor: Colors.white,
+                color: Colors.orange,
+                disabledColor: Colors.orange.withAlpha(120),
+                materialTapTargetSize: MaterialTapTargetSize.shrinkWrap,
+                onPressed: () {},
+              ),
+            )
           ],
         ),
       ),
