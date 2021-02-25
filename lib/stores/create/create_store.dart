@@ -1,5 +1,7 @@
 import 'package:mobx/mobx.dart';
+import 'package:xlo/models/address.dart';
 import 'package:xlo/models/category.dart';
+import 'package:xlo/stores/cep/cep_store.dart';
 part 'create_store.g.dart';
 
 class CreateStore = _CreateStoreBase with _$CreateStore;
@@ -55,6 +57,51 @@ abstract class _CreateStoreBase with Store {
 
   @action
   void setCategory(Category value) => category = value;
+
+  @computed
+  bool get categoryValid => category != null;
+  String get categoryError {
+    if (categoryValid)
+      return null;
+    else
+      return 'Campo obrigatório!';
+  }
+
+  CepStore cepStore = CepStore();
+
+  @computed
+  Address get address => cepStore.address;
+  bool get addressValid => address != null;
+  String get addressError {
+    if (addressValid)
+      return null;
+    else
+      return 'Campo obrigatório!';
+  }
+
+  @observable
+  String priceText = '';
+
+  @action
+  void setPrice(String value) => priceText = value;
+
+  @computed
+  num get price {
+    if (priceText.contains(','))
+      return num.tryParse(priceText.replaceAll(RegExp('[^0-9]'), '')) / 100;
+    else
+      return num.tryParse(priceText);
+  }
+
+  bool get priceValid => price != null && price <= 9999999;
+  String get priceError {
+    if (priceValid)
+      return null;
+    else if (priceText.isEmpty)
+      return 'Campo obrigatório';
+    else
+      return 'Preço inválido!';
+  }
 
   @observable
   bool hidePhone = false;

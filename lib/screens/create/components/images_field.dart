@@ -91,7 +91,7 @@ class ImagesField extends StatelessWidget {
                 decoration: BoxDecoration(
                   border: Border(top: BorderSide(color: Colors.red)),
                 ),
-                padding: EdgeInsets.fromLTRB(16, 8, 0, 8),
+                padding: EdgeInsets.fromLTRB(16, 8, 0, 0),
                 child: Text(
                   createStore.imagesError,
                   style: TextStyle(color: Colors.red, fontSize: 12),
