@@ -1,6 +1,7 @@
 import 'package:brasil_fields/formatter/real_input_formatter.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:xlo/components/custom_drawer/custom_drawer.dart';
 import 'package:xlo/screens/create/components/category_field.dart';
 import 'package:xlo/screens/create/components/cep_field.dart';
@@ -23,60 +24,71 @@ class CreateScreen extends StatelessWidget {
         title: Text('Criar anúncios'),
         centerTitle: true,
       ),
-      body: SingleChildScrollView(
-        child: Card(
-          clipBehavior: Clip.antiAlias,
-          margin: EdgeInsets.symmetric(horizontal: 16),
-          shape:
-              RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
-          elevation: 8,
-          child: Column(
-            mainAxisSize: MainAxisSize.min,
-            crossAxisAlignment: CrossAxisAlignment.stretch,
-            children: [
-              ImagesField(createStore),
-              TextFormField(
-                decoration: InputDecoration(
-                  labelText: 'Título *',
-                  labelStyle: _labelStyle,
-                  contentPadding: _contentPadding,
+      body: Container(
+        alignment: Alignment.center,
+        child: SingleChildScrollView(
+          child: Card(
+            clipBehavior: Clip.antiAlias,
+            margin: EdgeInsets.symmetric(horizontal: 16),
+            shape:
+                RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
+            elevation: 8,
+            child: Column(
+              mainAxisSize: MainAxisSize.min,
+              crossAxisAlignment: CrossAxisAlignment.stretch,
+              children: [
+                ImagesField(createStore),
+                Observer(builder: (_) {
+                  return TextFormField(
+                    onChanged: createStore.setTitle,
+                    decoration: InputDecoration(
+                      labelText: 'Título *',
+                      labelStyle: _labelStyle,
+                      contentPadding: _contentPadding,
+                      errorText: createStore.titleError,
+                    ),
+                  );
+                }),
+                Observer(builder: (_) {
+                  return TextFormField(
+                    onChanged: createStore.setDescription,
+                    decoration: InputDecoration(
+                      labelText: 'Descrição *',
+                      labelStyle: _labelStyle,
+                      contentPadding: _contentPadding,
+                      errorText: createStore.descriptionError,
+                    ),
+                    maxLength: null,
+                  );
+                }),
+                CategoryField(createStore),
+                CepField(),
+                TextFormField(
+                  decoration: InputDecoration(
+                      labelText: 'Preço *',
+                      labelStyle: _labelStyle,
+                      contentPadding: _contentPadding,
+                      prefixText: 'R\$ '),
+                  keyboardType: TextInputType.number,
+                  inputFormatters: [
+                    FilteringTextInputFormatter.digitsOnly,
+                    RealInputFormatter(centavos: true)
+                  ],
                 ),
-              ),
-              TextFormField(
-                decoration: InputDecoration(
-                  labelText: 'Descrição *',
-                  labelStyle: _labelStyle,
-                  contentPadding: _contentPadding,
-                ),
-                maxLength: null,
-              ),
-              CategoryField(createStore),
-              CepField(),
-              TextFormField(
-                decoration: InputDecoration(
-                    labelText: 'Preço *',
-                    labelStyle: _labelStyle,
-                    contentPadding: _contentPadding,
-                    prefixText: 'R\$ '),
-                keyboardType: TextInputType.number,
-                inputFormatters: [
-                  FilteringTextInputFormatter.digitsOnly,
-                  RealInputFormatter(centavos: true)
-                ],
-              ),
-              HidePhoneField(createStore),
-              SizedBox(
-                height: 50,
-                child: RaisedButton(
-                  child: Text('Enviar', style: TextStyle(fontSize: 18)),
-                  textColor: Colors.white,
-                  color: Colors.orange,
-                  disabledColor: Colors.orange.withAlpha(120),
-                  materialTapTargetSize: MaterialTapTargetSize.shrinkWrap,
-                  onPressed: () {},
-                ),
-              )
-            ],
+                HidePhoneField(createStore),
+                SizedBox(
+                  height: 50,
+                  child: RaisedButton(
+                    child: Text('Enviar', style: TextStyle(fontSize: 18)),
+                    textColor: Colors.white,
+                    color: Colors.orange,
+                    disabledColor: Colors.orange.withAlpha(120),
+                    materialTapTargetSize: MaterialTapTargetSize.shrinkWrap,
+                    onPressed: () {},
+                  ),
+                )
+              ],
+            ),
           ),
         ),
       ),
