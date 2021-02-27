@@ -7,7 +7,7 @@ import 'package:xlo/repositories/parse_errors.dart';
 import 'package:xlo/repositories/table_keys.dart';
 
 class AdvertsRepository {
-  Future<Adverts> save(Adverts adverts) async {
+  Future<void> save(Adverts adverts) async {
     try {
       final parseImages = await saveImages(adverts.images);
       final parseUser = ParseUser('', '', '')..set(keyUserId, adverts.user.id);
@@ -40,10 +40,7 @@ class AdvertsRepository {
 
       final response = await advertsObject.save();
 
-      if (response.success)
-        return Adverts.fromParse(response.result);
-      else
-        return Future.error(ParseErrors.getDescription(response.error.code));
+      if (!response.success) return Future.error('Falha ao salvar anúncio!');
     } catch (e) {
       return Future.error('Falha ao salvar anúncio!');
     }

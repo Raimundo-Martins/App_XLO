@@ -151,7 +151,8 @@ abstract class _CreateStoreBase with Store {
 
     loading = true;
     try {
-      savedAdverts = await AdvertsRepository().save(adverts);
+      await AdvertsRepository().save(adverts);
+      savedAdverts = true;
     } catch (e) {
       error = e;
     }
@@ -159,5 +160,5 @@ abstract class _CreateStoreBase with Store {
   }
 
   @observable
-  Adverts savedAdverts;
+  bool savedAdverts = false;
 }
