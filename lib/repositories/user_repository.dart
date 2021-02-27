@@ -7,9 +7,9 @@ class UserRepository {
   Future<User> signUp(User user) async {
     final parseUser = ParseUser(user.email, user.senha, user.email);
 
-    parseUser.set<String>(KeyUserName, user.name);
-    parseUser.set<String>(KeyUserPhone, user.phone);
-    parseUser.set(KeyUserType, user.type.index);
+    parseUser.set<String>(keyUserName, user.name);
+    parseUser.set<String>(keyUserPhone, user.phone);
+    parseUser.set(keyUserType, user.type.index);
 
     final response = await parseUser.signUp();
 
@@ -32,11 +32,11 @@ class UserRepository {
   User mapParseToUser(ParseUser parseUser) {
     return User(
       id: parseUser.objectId,
-      name: parseUser.get(KeyUserName),
-      email: parseUser.get(KeyUserEmail),
-      phone: parseUser.get(KeyUserPhone),
-      type: UserType.values[parseUser.get(KeyUserType)],
-      createdAt: parseUser.get(KeyUserCreatedAt),
+      name: parseUser.get(keyUserName),
+      email: parseUser.get(keyUserEmail),
+      phone: parseUser.get(keyUserPhone),
+      type: UserType.values[parseUser.get(keyUserType)],
+      createdAt: parseUser.get(keyUserCreatedAt),
     );
   }
 

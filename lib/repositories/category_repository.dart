@@ -5,8 +5,8 @@ import 'package:xlo/repositories/table_keys.dart';
 
 class CategoryRepository {
   Future<List<Category>> getList() async {
-    final queryBuilder = QueryBuilder(ParseObject(KeyCategoryTable))
-      ..orderByAscending(KeyCategoryDescription);
+    final queryBuilder = QueryBuilder(ParseObject(keyCategoryTable))
+      ..orderByAscending(keyCategoryDescription);
 
     final response = await queryBuilder.query();
 

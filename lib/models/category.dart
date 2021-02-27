@@ -8,5 +8,5 @@ class Category {
   Category({this.id, this.description});
   Category.fromParse(ParseObject parseObject)
       : id = parseObject.objectId,
-        description = parseObject.get(KeyCategoryDescription);
+        description = parseObject.get(keyCategoryDescription);
 }

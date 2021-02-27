@@ -131,7 +131,14 @@ abstract class _CreateStoreBase with Store {
   @action
   void invalidSendPressed() => showErrors = true;
 
-  void _send() {
+  @observable
+  bool loading = false;
+
+  @observable
+  String error;
+
+  @action
+  Future<void> _send() async {
     final adverts = Adverts();
     adverts.images = images;
     adverts.title = title;
@@ -142,6 +149,15 @@ abstract class _CreateStoreBase with Store {
     adverts.hidePhone = hidePhone;
     adverts.user = GetIt.I<UserManagerStore>().user;
 
-    AdvertsRepository().save(adverts);
+    loading = true;
+    try {
+      savedAdverts = await AdvertsRepository().save(adverts);
+    } catch (e) {
+      error = e;
+    }
+    loading = false;
   }
+
+  @observable
+  Adverts savedAdverts;
 }

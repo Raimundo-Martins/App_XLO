@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:get_it/get_it.dart';
-import 'package:parse_server_sdk/parse_server_sdk.dart';
 import 'package:xlo/screens/base/base_screen.dart';
 import 'package:xlo/stores/category/category_store.dart';
 import 'package:xlo/stores/page/page_store.dart';
