@@ -23,13 +23,12 @@ class HomeScreen extends StatelessWidget {
                 child: LayoutBuilder(
                   builder: (context, constraints) => Container(
                     width: constraints.biggest.width,
-                    child: Text(homeStore.search),
+                    child: Text(homeStore.search, textAlign: TextAlign.center,),
                   ),
                 ),
               );
             },
           ),
-          centerTitle: true,
           actions: [
             Observer(builder: (_) {
               if (homeStore.search.isEmpty)
