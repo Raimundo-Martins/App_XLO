@@ -10,12 +10,13 @@ class AdvertsRepository {
   Future<void> save(Adverts adverts) async {
     try {
       final parseImages = await saveImages(adverts.images);
-      final parseUser = ParseUser('', '', '')..set(keyUserId, adverts.user.id);
+      final parseUser = ParseUser('', '', '')
+        ..set(keyUserId, adverts.user.id);
       final advertsObject = ParseObject(keyAdvertsTable);
 
       if (adverts.id != null) advertsObject.objectId = adverts.id;
 
-      final parseACL = ParseACL(owner: parseUser); // Problema aqui
+      final parseACL = ParseACL(owner: parseUser);
       parseACL.setPublicReadAccess(allowed: true);
       parseACL.setPublicWriteAccess(allowed: false);
       advertsObject.setACL(parseACL);
@@ -45,7 +46,6 @@ class AdvertsRepository {
       if (!response.success)
         return Future.error(ParseErrors.getDescription(response.error.code));
     } catch (e) {
-      print(e);
       return Future.error('Falha ao salvar anúncio!');
     }
   }

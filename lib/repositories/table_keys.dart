@@ -1,15 +1,15 @@
-const keyUserId = 'userId';
+const keyUserId = 'objectId';
 const keyUserName = 'name';
 const keyUserEmail = 'email';
 const keyUserPhone = 'phone';
 const keyUserType = 'type';
 const keyUserCreatedAt = 'createdAt';
 
-const keyCategoryTable = 'categories';
+const keyCategoryTable = 'Categories';
 const keyCategoryId = 'objectId';
 const keyCategoryDescription = 'description';
 
-const String keyAdvertsTable = 'adverts';
+const String keyAdvertsTable = 'Adverts';
 const String keyAdvertsId = 'objectId';
 const String keyAdvertsTitle = 'title';
 const String keyAdvertsDescription = 'description';
