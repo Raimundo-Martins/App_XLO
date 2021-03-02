@@ -7,7 +7,7 @@ import 'package:xlo/models/user.dart';
 import 'package:xlo/repositories/table_keys.dart';
 import 'package:xlo/repositories/user_repository.dart';
 
-enum advertsStatus { PENDING, ACTIVE, SOLD, DELETED }
+enum AdvertsStatus { PENDING, ACTIVE, SOLD, DELETED }
 
 class Adverts {
   Adverts();
@@ -31,7 +31,7 @@ class Adverts {
     user =
         UserRepository().mapParseToUser(object.get<ParseUser>(keyAdvertsOwner));
     category = Category.fromParse(object.get<ParseObject>(keyAdvertsCategory));
-    status = advertsStatus.values[object.get<int>(keyAdvertsStatus)];
+    status = AdvertsStatus.values[object.get<int>(keyAdvertsStatus)];
   }
 
   String id;
@@ -42,7 +42,7 @@ class Adverts {
   Address address;
   num price;
   bool hidePhone;
-  advertsStatus status = advertsStatus.PENDING;
+  AdvertsStatus status = AdvertsStatus.PENDING;
   DateTime created;
   User user;
   int views;

@@ -7,7 +7,7 @@ import 'package:xlo/screens/filter/components/vendor_type_field.dart';
 import 'package:xlo/stores/home/home_store.dart';
 
 class FilterScreen extends StatelessWidget {
-  final filterStore = GetIt.I<HomeStore>().filterStore.clone;
+  final filterStore = GetIt.I<HomeStore>().filterStoreClone;
 
   @override
   Widget build(BuildContext context) {
