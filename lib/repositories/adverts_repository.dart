@@ -82,12 +82,14 @@ class AdvertsRepository {
     FilterStore filterStore,
     String search,
     Category category,
+    int page,
   }) async {
     final queryBuilder = QueryBuilder<ParseObject>(
       ParseObject(keyAdvertsTable),
     );
-    queryBuilder.includeObject([keyAdvertsOwner, keyAdvertsCategory]);
 
+    queryBuilder.includeObject([keyAdvertsOwner, keyAdvertsCategory]);
+    queryBuilder.setAmountToSkip(page * 10);
     queryBuilder.setLimit(10);
     queryBuilder.whereEqualTo(keyAdvertsStatus, AdvertsStatus.ACTIVE.index);
 
