@@ -49,7 +49,10 @@ class AdvertsScreen extends StatelessWidget {
                     LocationPanel(adverts),
                     Divider(color: Colors.grey[500]),
                     UserPanel(adverts),
-                    SizedBox(height: 120)
+                    SizedBox(
+                      height:
+                          adverts.status == AdvertsStatus.PENDING ? 16 : 120,
+                    )
                   ],
                 ),
               ),
