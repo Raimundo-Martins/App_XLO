@@ -153,4 +153,6 @@ class AdvertsRepository {
     else
       return Future.error(ParseErrors.getDescription(response.error.code));
   }
+
+  Future<List<Adverts>> getMyAdverts(User user) {}
 }
