@@ -1,4 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_mobx/flutter_mobx.dart';
+import 'package:xlo/screens/my_adverts/components/active_tile.dart';
+import 'package:xlo/stores/my_adverts/my_adverts_store.dart';
 
 class MyAdvertsScreen extends StatefulWidget {
   @override
@@ -7,6 +10,8 @@ class MyAdvertsScreen extends StatefulWidget {
 
 class _MyAdvertsScreenState extends State<MyAdvertsScreen>
     with SingleTickerProviderStateMixin {
+  final myAdvertsStore = MyAdvertsStore();
+
   TabController tabController;
 
   @override
@@ -35,7 +40,14 @@ class _MyAdvertsScreenState extends State<MyAdvertsScreen>
       body: TabBarView(
         controller: tabController,
         children: [
-          Container(color: Colors.red),
+          Observer(builder: (_) {
+            if (myAdvertsStore.activeAdverts.isEmpty) return Container();
+            return ListView.builder(
+              itemCount: myAdvertsStore.activeAdverts.length,
+              itemBuilder: (context, index) =>
+                  ActiveTile(myAdvertsStore.activeAdverts[index]),
+            );
+          }),
           Container(color: Colors.green),
           Container(color: Colors.blue),
         ],

@@ -154,5 +154,24 @@ class AdvertsRepository {
       return Future.error(ParseErrors.getDescription(response.error.code));
   }
 
-  Future<List<Adverts>> getMyAdverts(User user) {}
+  Future<List<Adverts>> getMyAdverts(User user) async {
+    final currentUser = ParseUser('', '', '')..set(keyUserId, user.id);
+    final queryBuilder =
+        QueryBuilder<ParseObject>(ParseObject(keyAdvertsTable));
+
+    queryBuilder.setLimit(100);
+    queryBuilder.orderByDescending(keyAdvertsCreatedAt);
+    queryBuilder.whereEqualTo(keyAdvertsOwner, currentUser.toPointer());
+    queryBuilder.includeObject([keyAdvertsCategory, keyAdvertsOwner]);
+
+    final response = await queryBuilder.query();
+    if (response.success && response.results != null)
+      return response.results
+          .map((result) => Adverts.fromParse(result))
+          .toList();
+    else if (response.success && response.results == null)
+      return [];
+    else
+      return Future.error(ParseErrors.getDescription(response.error.code));
+  }
 }
