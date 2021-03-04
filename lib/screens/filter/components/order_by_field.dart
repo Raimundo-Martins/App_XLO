@@ -46,7 +46,6 @@ class OrderByField extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
             children: [
               buildOption('Data', OrderBy.DATE),
-              SizedBox(width: 16),
               buildOption('Preço', OrderBy.PRICE),
             ],
           );

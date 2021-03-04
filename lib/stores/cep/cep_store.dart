@@ -6,13 +6,15 @@ part 'cep_store.g.dart';
 class CepStore = _CepStoreBase with _$CepStore;
 
 abstract class _CepStoreBase with Store {
-  _CepStoreBase() {
+  _CepStoreBase(String initialCep) {
     autorun((_) {
       if (clearCep.length != 8)
         _resetCep();
       else
         _searchCep();
     });
+
+    setCep(initialCep);
   }
 
   @observable

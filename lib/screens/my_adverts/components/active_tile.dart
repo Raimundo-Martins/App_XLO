@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:xlo/models/adverts.dart';
 import 'package:xlo/helpers/extensions.dart';
 import 'package:xlo/screens/adverts/adverts_screen.dart';
+import 'package:xlo/screens/create/create_screen.dart';
 
 class ActiveTile extends StatelessWidget {
   ActiveTile(this.adverts);
@@ -10,9 +11,9 @@ class ActiveTile extends StatelessWidget {
   final Adverts adverts;
 
   final List<MenuChoise> choices = [
-    MenuChoise(index: 0, title: 'Editar', iconData: Icons.edit),
-    MenuChoise(index: 1, title: 'Já verdi', iconData: Icons.thumb_up),
-    MenuChoise(index: 2, title: 'Excluir', iconData: Icons.delete),
+    MenuChoise(index: 0, title: 'EDITAR', iconData: Icons.edit),
+    MenuChoise(index: 1, title: 'VENDIDOS', iconData: Icons.thumb_up),
+    MenuChoise(index: 2, title: 'EXCLUIR', iconData: Icons.delete),
   ];
 
   @override
@@ -52,19 +53,18 @@ class ActiveTile extends StatelessWidget {
                       Text(
                         adverts.title,
                         overflow: TextOverflow.ellipsis,
-                        style: TextStyle(fontWeight: FontWeight.w600),
+                        style: TextStyle(fontWeight: FontWeight.w700),
                       ),
                       Text(
                         adverts.price.formattedMoney(),
                         style: TextStyle(
-                          fontWeight: FontWeight.w300,
-                        ),
+                            fontWeight: FontWeight.w500, color: Colors.purple),
                       ),
                       Text(
-                        '${adverts.views}',
+                        '${adverts.views} visualizações',
                         style: TextStyle(
-                          fontSize: 11,
-                          color: Colors.grey[800],
+                          fontSize: 12,
+                          color: Colors.grey[900],
                         ),
                       ),
                     ],
@@ -77,6 +77,7 @@ class ActiveTile extends StatelessWidget {
                     onSelected: (choice) {
                       switch (choice.index) {
                         case 0:
+                          editAdverts(context);
                           break;
                         case 1:
                           break;
@@ -118,6 +119,14 @@ class ActiveTile extends StatelessWidget {
             ],
           ),
         ),
+      ),
+    );
+  }
+
+  Future<void> editAdverts(BuildContext context) {
+    Navigator.of(context).push(
+      MaterialPageRoute(
+        builder: (context) => CreateScreen(adverts: adverts),
       ),
     );
   }

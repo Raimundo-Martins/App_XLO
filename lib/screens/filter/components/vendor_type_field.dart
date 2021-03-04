@@ -31,7 +31,7 @@ class VendorTypeField extends StatelessWidget {
                   },
                   child: Container(
                     height: 50,
-                    width: 130,
+                    width: 110,
                     decoration: BoxDecoration(
                       borderRadius: BorderRadius.circular(25),
                       color: filterStore.isTypeParticular
@@ -51,7 +51,7 @@ class VendorTypeField extends StatelessWidget {
                     ),
                   ),
                 ),
-                SizedBox(width: 12),
+                SizedBox(width: 16),
                 GestureDetector(
                   onTap: () {
                     if (filterStore.isTypeProfissional) {
@@ -64,7 +64,7 @@ class VendorTypeField extends StatelessWidget {
                   },
                   child: Container(
                     height: 50,
-                    width: 130,
+                    width: 110,
                     decoration: BoxDecoration(
                       borderRadius: BorderRadius.circular(25),
                       color: filterStore.isTypeProfissional
