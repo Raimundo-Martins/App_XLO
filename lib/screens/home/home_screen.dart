@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:get_it/get_it.dart';
+import 'package:xlo/components/empty_card.dart';
 import 'package:xlo/components/custom_drawer/custom_drawer.dart';
 import 'package:xlo/screens/home/components/adverts_tile.dart';
 import 'package:xlo/screens/home/components/create_adverts_button.dart';
@@ -91,28 +92,8 @@ class _HomeScreenState extends State<HomeScreen> {
                           ),
                         );
                       if (homeStore.advertsList.isEmpty)
-                        return Padding(
-                          padding: const EdgeInsets.all(8.0),
-                          child: Column(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: [
-                              Icon(
-                                Icons.border_all,
-                                color: Colors.white,
-                                size: 100,
-                              ),
-                              SizedBox(height: 8),
-                              Text(
-                                'Huumm...\nNenhuma anúncio encontrado!',
-                                style: TextStyle(
-                                  color: Colors.white,
-                                  fontSize: 20,
-                                  fontWeight: FontWeight.w700,
-                                ),
-                                textAlign: TextAlign.center,
-                              )
-                            ],
-                          ),
+                        return EmptyCard(
+                          text: 'Nunhum anúncio encontrado!',
                         );
                       return ListView.builder(
                         controller: scrollController,
@@ -136,9 +117,7 @@ class _HomeScreenState extends State<HomeScreen> {
                     bottom: 50,
                     left: 0,
                     right: 0,
-                    child: CreateAdvertsButton(
-                      scrollController
-                    ),
+                    child: CreateAdvertsButton(scrollController),
                   )
                 ],
               ),

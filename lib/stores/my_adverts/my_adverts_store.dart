@@ -39,4 +39,18 @@ abstract class _MyAdvertsStoreBase with Store {
   bool loading = false;
 
   void refresh() => _getMyAdverts();
+
+  @action
+  Future<void> soldAdvert(Adverts adverts) async {
+    loading = true;
+    await AdvertsRepository().sold(adverts);
+    refresh();
+  }
+
+  @action
+  Future<void> deleteAdvert(Adverts adverts) async {
+    loading = true;
+    await AdvertsRepository().delete(adverts);
+    refresh();
+  }
 }

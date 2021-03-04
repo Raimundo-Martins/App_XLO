@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
+import 'package:xlo/components/empty_card.dart';
 import 'package:xlo/screens/my_adverts/components/active_tile.dart';
 import 'package:xlo/screens/my_adverts/components/pending_tile.dart';
 import 'package:xlo/screens/my_adverts/components/sold_tile.dart';
@@ -57,7 +58,10 @@ class _MyAdvertsScreenState extends State<MyAdvertsScreen>
             children: [
               Observer(
                 builder: (_) {
-                  if (myAdvertsStore.activeAdverts.isEmpty) return Container();
+                  if (myAdvertsStore.activeAdverts.isEmpty)
+                    return EmptyCard(
+                      text: 'Você não possui nenhum anúncio ativo!',
+                    );
                   return ListView.builder(
                     itemCount: myAdvertsStore.activeAdverts.length,
                     itemBuilder: (context, index) => ActiveTile(
@@ -69,7 +73,9 @@ class _MyAdvertsScreenState extends State<MyAdvertsScreen>
               ),
               Observer(
                 builder: (_) {
-                  if (myAdvertsStore.pendingAdverts.isEmpty) return Container();
+                  if (myAdvertsStore.pendingAdverts.isEmpty) return EmptyCard(
+                      text: 'Você não possui nenhum anúncio pendente!',
+                    );
                   return ListView.builder(
                     itemCount: myAdvertsStore.pendingAdverts.length,
                     itemBuilder: (context, index) => PendingTile(
@@ -80,11 +86,14 @@ class _MyAdvertsScreenState extends State<MyAdvertsScreen>
               ),
               Observer(
                 builder: (_) {
-                  if (myAdvertsStore.soldAdverts.isEmpty) return Container();
+                  if (myAdvertsStore.soldAdverts.isEmpty) return EmptyCard(
+                      text: 'Você não possui nenhum anúncio vendido!',
+                    );
                   return ListView.builder(
                     itemCount: myAdvertsStore.soldAdverts.length,
                     itemBuilder: (context, index) => SoldTile(
                       myAdvertsStore.soldAdverts[index],
+                      myAdvertsStore,
                     ),
                   );
                 },

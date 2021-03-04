@@ -79,11 +79,13 @@ class ActiveTile extends StatelessWidget {
                     onSelected: (choice) {
                       switch (choice.index) {
                         case 0:
-                          editAdverts(context);
+                          editAdvert(context);
                           break;
                         case 1:
+                          soldAdvert(context);
                           break;
                         case 2:
+                          deleteAdvert(context);
                           break;
                         default:
                       }
@@ -125,13 +127,59 @@ class ActiveTile extends StatelessWidget {
     );
   }
 
-  Future<void> editAdverts(BuildContext context) async {
+  Future<void> editAdvert(BuildContext context) async {
     final success = await Navigator.of(context).push(
       MaterialPageRoute(
         builder: (context) => CreateScreen(adverts: adverts),
       ),
     );
     if (success != null && success) myAdvertsStore.refresh();
+  }
+
+  Future<void> soldAdvert(BuildContext context) async {
+    showDialog(
+      context: context,
+      builder: (context) => AlertDialog(
+        title: Text('Vendido'),
+        content: Text('Confirmar a venda de ${adverts.title}?'),
+        actions: [
+          FlatButton(
+              child: Text('Não'),
+              onPressed: Navigator.of(context).pop,
+              textColor: Colors.purple),
+          FlatButton(
+              child: Text('Sim'),
+              onPressed: () {
+                Navigator.of(context).pop();
+                myAdvertsStore.soldAdvert(adverts);
+              },
+              textColor: Colors.red),
+        ],
+      ),
+    );
+  }
+
+  Future<void> deleteAdvert(BuildContext context) async {
+    showDialog(
+      context: context,
+      builder: (context) => AlertDialog(
+        title: Text('Excluir'),
+        content: Text('Confirmar a exclusão de ${adverts.title}?'),
+        actions: [
+          FlatButton(
+              child: Text('Não'),
+              onPressed: Navigator.of(context).pop,
+              textColor: Colors.purple),
+          FlatButton(
+              child: Text('Sim'),
+              onPressed: () {
+                Navigator.of(context).pop();
+                myAdvertsStore.deleteAdvert(adverts);
+              },
+              textColor: Colors.red),
+        ],
+      ),
+    );
   }
 }
 
