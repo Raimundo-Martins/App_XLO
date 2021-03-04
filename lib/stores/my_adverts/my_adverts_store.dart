@@ -15,7 +15,9 @@ abstract class _MyAdvertsStoreBase with Store {
   Future<void> _getMyAdverts() async {
     final user = GetIt.I<UserManagerStore>().user;
     try {
+      loading = true;
       allAdverts = await AdvertsRepository().getMyAdverts(user);
+      loading = false;
     } catch (e) {}
   }
 
@@ -32,4 +34,9 @@ abstract class _MyAdvertsStoreBase with Store {
   List<Adverts> get soldAdverts => allAdverts
       .where((adverts) => adverts.status == AdvertsStatus.SOLD)
       .toList();
+
+  @observable
+  bool loading = false;
+
+  void refresh() => _getMyAdverts();
 }

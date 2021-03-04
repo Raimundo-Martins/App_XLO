@@ -6,6 +6,10 @@ import 'package:xlo/screens/my_adverts/components/sold_tile.dart';
 import 'package:xlo/stores/my_adverts/my_adverts_store.dart';
 
 class MyAdvertsScreen extends StatefulWidget {
+  final initialPage;
+
+  MyAdvertsScreen({this.initialPage = 0});
+
   @override
   _MyAdvertsScreenState createState() => _MyAdvertsScreenState();
 }
@@ -20,7 +24,8 @@ class _MyAdvertsScreenState extends State<MyAdvertsScreen>
   void initState() {
     super.initState();
 
-    tabController = TabController(length: 3, vsync: this);
+    tabController =
+        TabController(length: 3, vsync: this, initialIndex: widget.initialPage);
   }
 
   @override
@@ -39,43 +44,54 @@ class _MyAdvertsScreenState extends State<MyAdvertsScreen>
           ],
         ),
       ),
-      body: TabBarView(
-        controller: tabController,
-        children: [
-          Observer(
-            builder: (_) {
-              if (myAdvertsStore.activeAdverts.isEmpty) return Container();
-              return ListView.builder(
-                itemCount: myAdvertsStore.activeAdverts.length,
-                itemBuilder: (context, index) => ActiveTile(
-                  myAdvertsStore.activeAdverts[index],
-                ),
-              );
-            },
-          ),
-          Observer(
-            builder: (_) {
-              if (myAdvertsStore.pendingAdverts.isEmpty) return Container();
-              return ListView.builder(
-                itemCount: myAdvertsStore.pendingAdverts.length,
-                itemBuilder: (context, index) => PendingTile(
-                  myAdvertsStore.pendingAdverts[index],
-                ),
-              );
-            },
-          ),
-          Observer(
-            builder: (_) {
-              if (myAdvertsStore.soldAdverts.isEmpty) return Container();
-              return ListView.builder(
-                itemCount: myAdvertsStore.soldAdverts.length,
-                itemBuilder: (context, index) => SoldTile(
-                  myAdvertsStore.soldAdverts[index],
-                ),
-              );
-            },
-          ),
-        ],
+      body: Observer(
+        builder: (_) {
+          if (myAdvertsStore.loading)
+            Center(
+              child: CircularProgressIndicator(
+                valueColor: AlwaysStoppedAnimation(Colors.white),
+              ),
+            );
+          return TabBarView(
+            controller: tabController,
+            children: [
+              Observer(
+                builder: (_) {
+                  if (myAdvertsStore.activeAdverts.isEmpty) return Container();
+                  return ListView.builder(
+                    itemCount: myAdvertsStore.activeAdverts.length,
+                    itemBuilder: (context, index) => ActiveTile(
+                      myAdvertsStore.activeAdverts[index],
+                      myAdvertsStore,
+                    ),
+                  );
+                },
+              ),
+              Observer(
+                builder: (_) {
+                  if (myAdvertsStore.pendingAdverts.isEmpty) return Container();
+                  return ListView.builder(
+                    itemCount: myAdvertsStore.pendingAdverts.length,
+                    itemBuilder: (context, index) => PendingTile(
+                      myAdvertsStore.pendingAdverts[index],
+                    ),
+                  );
+                },
+              ),
+              Observer(
+                builder: (_) {
+                  if (myAdvertsStore.soldAdverts.isEmpty) return Container();
+                  return ListView.builder(
+                    itemCount: myAdvertsStore.soldAdverts.length,
+                    itemBuilder: (context, index) => SoldTile(
+                      myAdvertsStore.soldAdverts[index],
+                    ),
+                  );
+                },
+              ),
+            ],
+          );
+        },
       ),
     );
   }

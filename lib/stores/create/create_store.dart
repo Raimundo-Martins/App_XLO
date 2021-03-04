@@ -11,12 +11,12 @@ part 'create_store.g.dart';
 class CreateStore = _CreateStoreBase with _$CreateStore;
 
 abstract class _CreateStoreBase with Store {
-  _CreateStoreBase(Adverts adverts) {
+  _CreateStoreBase(this.adverts) {
     images = adverts.images.asObservable();
-    title = adverts.title;
-    description = adverts.description;
+    title = adverts.title ?? '';
+    description = adverts.description ?? '';
     category = adverts.category;
-    priceText = adverts.price?.toStringAsFixed(2);
+    priceText = adverts.price?.toStringAsFixed(2) ?? '';
     hidePhone = adverts.hidePhone;
 
     if (adverts.address != null)
@@ -24,6 +24,8 @@ abstract class _CreateStoreBase with Store {
     else
       cepStore = CepStore(null);
   }
+
+  final Adverts adverts;
 
   ObservableList images = ObservableList();
 
@@ -43,7 +45,7 @@ abstract class _CreateStoreBase with Store {
   void setTitle(String value) => title = value;
 
   @computed
-  bool get titleValid => title.length >= 6;
+  bool get titleValid => title.length >= 2;
   String get titleError {
     if (!showErrors || titleValid)
       return null;
