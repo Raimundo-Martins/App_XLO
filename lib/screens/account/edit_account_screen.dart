@@ -1,9 +1,13 @@
 import 'package:brasil_fields/brasil_fields.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:toggle_switch/toggle_switch.dart';
+import 'package:xlo/stores/account/edit_account_store.dart';
 
 class EditAccountScreen extends StatelessWidget {
+  final editAccountStore = EditAccountStore();
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -22,72 +26,106 @@ class EditAccountScreen extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.stretch,
                 mainAxisSize: MainAxisSize.min,
                 children: [
-                  LayoutBuilder(
-                    builder: (context, constraints) => ToggleSwitch(
-                      minWidth: constraints.biggest.width / 2.01,
-                      labels: ['Particular', 'Profissional'],
-                      cornerRadius: 20,
-                      activeBgColor: Colors.purple,
-                      activeFgColor: Colors.white,
-                      inactiveBgColor: Colors.grey,
-                      inactiveFgColor: Colors.white,
-                      initialLabelIndex: 0,
-                      onToggle: (toggle) {},
-                    ),
-                  ),
-                  SizedBox(height: 16),
-                  TextFormField(
-                    decoration: InputDecoration(
-                      border: OutlineInputBorder(),
-                      isDense: true,
-                      labelText: 'Nome *',
-                    ),
-                  ),
-                  SizedBox(height: 8),
-                  TextFormField(
-                    decoration: InputDecoration(
-                      border: OutlineInputBorder(),
-                      isDense: true,
-                      labelText: 'Telefone *',
-                    ),
-                    keyboardType: TextInputType.number,
-                    inputFormatters: [
-                      FilteringTextInputFormatter.digitsOnly,
-                      TelefoneInputFormatter()
-                    ],
-                  ),
-                  SizedBox(height: 8),
-                  TextFormField(
-                    decoration: InputDecoration(
-                      border: OutlineInputBorder(),
-                      isDense: true,
-                      labelText: 'Nova Senha',
-                    ),
-                    obscureText: true,
-                  ),
-                  SizedBox(height: 8),
-                  TextFormField(
-                    decoration: InputDecoration(
-                      border: OutlineInputBorder(),
-                      isDense: true,
-                      labelText: 'Confirmar Nova Senha *',
-                    ),
-                    obscureText: true,
-                  ),
-                  SizedBox(height: 16),
-                  SizedBox(
-                    height: 50,
-                    child: RaisedButton(
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(16),
+                  Observer(builder: (_) {
+                    return IgnorePointer(
+                      ignoring: editAccountStore.loading,
+                      child: LayoutBuilder(
+                        builder: (context, constraints) => ToggleSwitch(
+                          minWidth: constraints.biggest.width / 2.01,
+                          labels: ['Particular', 'Profissional'],
+                          cornerRadius: 20,
+                          activeBgColor: Colors.purple,
+                          activeFgColor: Colors.white,
+                          inactiveBgColor: Colors.grey,
+                          inactiveFgColor: Colors.white,
+                          initialLabelIndex: editAccountStore.userType.index,
+                          onToggle: editAccountStore.setUserType,
+                        ),
                       ),
-                      color: Colors.orange,
-                      elevation: 0,
-                      child: Text('SALVAR'),
-                      textColor: Colors.white,
-                      onPressed: () {},
-                    ),
-                  ),
+                    );
+                  }),
+                  SizedBox(height: 16),
+                  Observer(builder: (_) {
+                    return TextFormField(
+                      initialValue: editAccountStore.name,
+                      enabled: !editAccountStore.loading,
+                      decoration: InputDecoration(
+                        border: OutlineInputBorder(),
+                        isDense: true,
+                        labelText: 'Nome *',
+                        errorText: editAccountStore.nameError,
+                      ),
+                      onChanged: editAccountStore.setName,
+                    );
+                  }),
+                  SizedBox(height: 8),
+                  Observer(builder: (_) {
+                    return TextFormField(
+                      initialValue: editAccountStore.phone,
+                      enabled: !editAccountStore.loading,
+                      decoration: InputDecoration(
+                        border: OutlineInputBorder(),
+                        isDense: true,
+                        labelText: 'Telefone *',
+                        errorText: editAccountStore.phoneError,
+                      ),
+                      onChanged: editAccountStore.setPhone,
+                      keyboardType: TextInputType.number,
+                      inputFormatters: [
+                        FilteringTextInputFormatter.digitsOnly,
+                        TelefoneInputFormatter()
+                      ],
+                    );
+                  }),
+                  SizedBox(height: 8),
+                  Observer(builder: (_) {
+                    return TextFormField(
+                      enabled: !editAccountStore.loading,
+                      decoration: InputDecoration(
+                        border: OutlineInputBorder(),
+                        isDense: true,
+                        labelText: 'Nova Senha',
+                      ),
+                      obscureText: true,
+                      onChanged: editAccountStore.setSenha1,
+                    );
+                  }),
+                  SizedBox(height: 8),
+                  Observer(builder: (_) {
+                    return TextFormField(
+                      enabled: !editAccountStore.loading,
+                      decoration: InputDecoration(
+                        border: OutlineInputBorder(),
+                        isDense: true,
+                        labelText: 'Confirmar Nova Senha *',
+                        errorText: editAccountStore.senhaError,
+                      ),
+                      obscureText: true,
+                      onChanged: editAccountStore.setSenha2,
+                    );
+                  }),
+                  SizedBox(height: 16),
+                  Observer(builder: (_) {
+                    return SizedBox(
+                      height: 50,
+                      child: RaisedButton(
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(16),
+                        ),
+                        color: Colors.orange,
+                        disabledColor: Colors.orange.withAlpha(120),
+                        elevation: 0,
+                        child: editAccountStore.loading
+                            ? CircularProgressIndicator(
+                                valueColor:
+                                    AlwaysStoppedAnimation(Colors.white),
+                              )
+                            : Text('SALVAR'),
+                        textColor: Colors.white,
+                        onPressed: editAccountStore.savePressed,
+                      ),
+                    );
+                  }),
                   SizedBox(height: 8),
                   SizedBox(
                     height: 50,
