@@ -1,6 +1,7 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:carousel_pro/carousel_pro.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:get_it/get_it.dart';
 import 'package:xlo/models/adverts.dart';
 import 'package:xlo/screens/adverts/components/bottom_bar.dart';
@@ -26,11 +27,17 @@ class AdvertsScreen extends StatelessWidget {
         title: Text('Anúncios'),
         centerTitle: true,
         actions: [
-          if (adverts.status == AdvertsStatus.ACTIVE && userManagerStore.isLoggedIn)
-            IconButton(
-              icon: Icon(Icons.favorite_border),
-              onPressed: () => favoriteStore.toggleFavorite(adverts),
-            )
+          if (adverts.status == AdvertsStatus.ACTIVE &&
+              userManagerStore.isLoggedIn)
+            Observer(builder: (_) {
+              return IconButton(
+                icon: Icon(favoriteStore.favoriteList
+                        .any((favorite) => favorite.id == adverts.id)
+                    ? Icons.favorite
+                    : Icons.favorite_border),
+                onPressed: () => favoriteStore.toggleFavorite(adverts),
+              );
+            })
         ],
       ),
       body: Stack(
