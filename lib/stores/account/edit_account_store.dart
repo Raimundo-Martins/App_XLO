@@ -3,6 +3,7 @@ import 'dart:ui';
 import 'package:get_it/get_it.dart';
 import 'package:mobx/mobx.dart';
 import 'package:xlo/models/user.dart';
+import 'package:xlo/repositories/user_repository.dart';
 import 'package:xlo/stores/user/user_manager_store.dart';
 part 'edit_account_store.g.dart';
 
@@ -11,8 +12,10 @@ class EditAccountStore = _EditAccountStoreBase with _$EditAccountStore;
 abstract class _EditAccountStoreBase with Store {
   final userManagerStore = GetIt.I<UserManagerStore>();
 
+  User user;
+
   _EditAccountStoreBase() {
-    final user = userManagerStore.user;
+    user = userManagerStore.user;
 
     userType = user.type;
     name = user.name;
@@ -81,5 +84,23 @@ abstract class _EditAccountStoreBase with Store {
   @action
   Future<void> _save() async {
     loading = true;
+
+    user.name = name;
+    user.phone = phone;
+    user.type = userType;
+
+    if (senha1.isNotEmpty)
+      user.senha = senha1;
+    else
+      user.senha = null;
+
+    try {
+      await UserRepository().save(user);
+      userManagerStore.setUser(user);
+    } catch (e) {}
+
+    loading = false;
   }
+
+  void logout() => userManagerStore.logout();
 }

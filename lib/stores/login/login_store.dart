@@ -43,6 +43,7 @@ abstract class _LoginStoreBase with Store {
   @action
   Future<void> login() async {
     loading = true;
+    error = null;
 
     try {
       final user = await UserRepository().loginWithEmail(email, senha);
