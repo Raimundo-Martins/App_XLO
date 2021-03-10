@@ -1,15 +1,21 @@
+import 'package:get_it/get_it.dart';
 import 'package:mobx/mobx.dart';
 import 'package:xlo/models/adverts.dart';
 import 'package:xlo/models/category.dart';
 import 'package:xlo/repositories/adverts_repository.dart';
+import 'package:xlo/stores/connectivity/connectivity_store.dart';
 import 'package:xlo/stores/filter/filter_store.dart';
 part 'home_store.g.dart';
 
 class HomeStore = _HomeStoreBase with _$HomeStore;
 
 abstract class _HomeStoreBase with Store {
+  final ConnectivityStore connectivityStore = GetIt.I<ConnectivityStore>();
+
   _HomeStoreBase() {
     autorun((_) async {
+      // ignore: unnecessary_statements
+      connectivityStore.connected;
       try {
         setLoading(true);
         final newAdverts = await AdvertsRepository().getHomeAdvertsList(

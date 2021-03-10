@@ -4,6 +4,7 @@ import 'package:get_it/get_it.dart';
 import 'package:parse_server_sdk_flutter/parse_server_sdk.dart';
 import 'package:xlo/screens/base/base_screen.dart';
 import 'package:xlo/stores/category/category_store.dart';
+import 'package:xlo/stores/connectivity/connectivity_store.dart';
 import 'package:xlo/stores/favorite/favorite_store.dart';
 import 'package:xlo/stores/home/home_store.dart';
 import 'package:xlo/stores/page/page_store.dart';
@@ -17,6 +18,7 @@ void main() async {
 }
 
 void setupLocators() {
+  GetIt.I.registerSingleton(ConnectivityStore());
   GetIt.I.registerSingleton(PageStore());
   GetIt.I.registerSingleton(HomeStore());
   GetIt.I.registerSingleton(UserManagerStore());
